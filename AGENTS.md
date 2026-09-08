@@ -6,7 +6,7 @@ Next.js 16 static export — `output: 'export'` produces plain HTML/CSS/JS at bu
 
 - HTTP port: dev `3000` (next dev) / prod `80` (nginx)
 - Siblings: —
-- Runtime base: dev `nodejs@22` / prod `static`
+- Runtime base: dev `nodejs@24` / prod `static`
 
 ## Zerops dev
 
@@ -21,4 +21,5 @@ Next.js 16 static export — `output: 'export'` produces plain HTML/CSS/JS at bu
 
 - `next.config.ts` sets `output: 'export'` — the build emits `out/` with no Node.js required at runtime. Prod `deployFiles: out/~` strips the prefix so the exported tree is the nginx document root.
 - `NEXT_PUBLIC_*` env vars are baked into the bundle at build time; set them in `build.envVariables` in `zerops.yaml`, not as runtime service vars (there's no runtime process in static mode).
-- Build cache includes `.next/cache` for Next.js incremental compilation — don't remove it.
+- Prod build uses `npm ci --include=dev` — Zerops sets `NODE_ENV=production`, which omits devDependencies (TypeScript) unless explicitly included.
+- TypeScript is pinned to 5.9.x — Next.js 16 type-checking is not compatible with TypeScript 7 yet.
