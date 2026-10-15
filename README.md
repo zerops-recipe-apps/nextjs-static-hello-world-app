@@ -25,7 +25,7 @@ The main application configuration file you place at the root of your repository
 zerops:
   - setup: prod
     build:
-      base: nodejs@22
+      base: nodejs@24
 
       # NEXT_PUBLIC_* vars are baked into the static
       # output at build time — there is no runtime
@@ -34,7 +34,7 @@ zerops:
         NEXT_PUBLIC_APP_ENV: production
 
       buildCommands:
-        - npm ci
+        - npm ci --include=dev
         - npm run build
 
       # Strip 'out/' prefix — contents become the Nginx
@@ -59,7 +59,7 @@ zerops:
 
   - setup: dev
     build:
-      base: nodejs@22
+      base: nodejs@24
       os: ubuntu
       buildCommands:
         # npm install (not ci) — lock file may not exist
@@ -74,7 +74,7 @@ zerops:
     run:
       # Node.js at runtime so the developer can run
       # 'npm run dev' or any other tooling via SSH.
-      base: nodejs@22
+      base: nodejs@24
       os: ubuntu
       # Keep the container alive — developer drives via
       # SSH, starting their own dev server manually.

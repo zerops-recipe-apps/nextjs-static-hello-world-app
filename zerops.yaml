@@ -6,11 +6,11 @@ zerops:
     build:
       base: nodejs@24
 
-      # NEXT_PUBLIC_* vars are baked into the static
-      # output at build time — there is no runtime
-      # process to read env vars in static deployments.
+      # NEXT_PUBLIC_* vars are baked into the static output at build
+      # time. Service vault `APP_ENV` becomes RUNTIME_APP_ENV in the
+      # build shell — reference it here instead of assuming injection.
       envVariables:
-        NEXT_PUBLIC_APP_ENV: production
+        NEXT_PUBLIC_APP_ENV: ${RUNTIME_APP_ENV:-production}
 
       buildCommands:
         - npm ci --include=dev
